@@ -1,0 +1,279 @@
+{
+  "snapshot_date": "2026-10-09",
+  "source": "AgentLot live catalog plus separately verified AgentBazaar and WorkProtocol",
+  "rule": "Zero out-of-pocket to the operator. Platform commissions deducted from successful earnings are allowed. Hidden worker gas/deposit/stake causes exclusion.",
+  "agentlot_zero_spend_candidates": 52,
+  "separately_added_zero_spend_candidates": 2,
+  "entries": [
+    {
+      "id": "clawlancer",
+      "name": "Clawlancer",
+      "mode": "blocked_hidden_cost"
+    },
+    {
+      "id": "bountybook",
+      "name": "BountyBook",
+      "mode": "direct"
+    },
+    {
+      "id": "taskmarket",
+      "name": "Daydreams TaskMarket",
+      "mode": "direct"
+    },
+    {
+      "id": "t2000",
+      "name": "t2000 Open Jobs",
+      "mode": "discovery"
+    },
+    {
+      "id": "taskbounty",
+      "name": "TaskBounty",
+      "mode": "discovery"
+    },
+    {
+      "id": "frantic",
+      "name": "Frantic",
+      "mode": "discovery"
+    },
+    {
+      "id": "agentsbay",
+      "name": "agentsbay",
+      "mode": "direct"
+    },
+    {
+      "id": "moltjobs",
+      "name": "MoltJobs",
+      "mode": "direct"
+    },
+    {
+      "id": "taskforce",
+      "name": "TaskForce",
+      "mode": "blocked_hidden_cost"
+    },
+    {
+      "id": "clawgig",
+      "name": "ClawGig",
+      "mode": "direct"
+    },
+    {
+      "id": "trybounty",
+      "name": "Bounty / trybounty.ai",
+      "mode": "catalog"
+    },
+    {
+      "id": "agentpact",
+      "name": "AgentPact",
+      "mode": "catalog"
+    },
+    {
+      "id": "near_agent_market",
+      "name": "NEAR AI Agent Market v2",
+      "mode": "catalog"
+    },
+    {
+      "id": "agent_hansa",
+      "name": "Agent Hansa",
+      "mode": "catalog"
+    },
+    {
+      "id": "agenthire",
+      "name": "AgentHire",
+      "mode": "catalog"
+    },
+    {
+      "id": "toku",
+      "name": "Toku.agency",
+      "mode": "catalog"
+    },
+    {
+      "id": "algora",
+      "name": "Algora",
+      "mode": "catalog"
+    },
+    {
+      "id": "boss_dev",
+      "name": "boss.dev",
+      "mode": "catalog"
+    },
+    {
+      "id": "dework",
+      "name": "Dework",
+      "mode": "catalog"
+    },
+    {
+      "id": "opire",
+      "name": "Opire",
+      "mode": "catalog"
+    },
+    {
+      "id": "stacker_news",
+      "name": "Stacker News",
+      "mode": "catalog"
+    },
+    {
+      "id": "superteam_earn",
+      "name": "Superteam Earn",
+      "mode": "catalog_human_payout_step"
+    },
+    {
+      "id": "drips_wave",
+      "name": "Drips Wave",
+      "mode": "catalog"
+    },
+    {
+      "id": "code4rena",
+      "name": "Code4rena",
+      "mode": "security_discovery_only"
+    },
+    {
+      "id": "bugcrowd",
+      "name": "Bugcrowd",
+      "mode": "security_discovery_only"
+    },
+    {
+      "id": "google_oss_vrp",
+      "name": "Google OSS VRP",
+      "mode": "security_discovery_only"
+    },
+    {
+      "id": "hackenproof",
+      "name": "HackenProof",
+      "mode": "security_discovery_only"
+    },
+    {
+      "id": "hackerone_cantina",
+      "name": "HackerOne / Cantina",
+      "mode": "security_discovery_only"
+    },
+    {
+      "id": "huntr",
+      "name": "huntr",
+      "mode": "security_discovery_only"
+    },
+    {
+      "id": "immunefi",
+      "name": "Immunefi",
+      "mode": "security_discovery_only"
+    },
+    {
+      "id": "intigriti",
+      "name": "Intigriti",
+      "mode": "security_discovery_only"
+    },
+    {
+      "id": "sherlock",
+      "name": "Sherlock",
+      "mode": "security_discovery_only"
+    },
+    {
+      "id": "aicrowd",
+      "name": "AIcrowd",
+      "mode": "competition_discovery_only"
+    },
+    {
+      "id": "drivendata",
+      "name": "DrivenData",
+      "mode": "competition_discovery_only"
+    },
+    {
+      "id": "topcoder_marathon",
+      "name": "Topcoder Marathon Match",
+      "mode": "competition_discovery_only"
+    },
+    {
+      "id": "zindi",
+      "name": "Zindi",
+      "mode": "competition_discovery_only"
+    },
+    {
+      "id": "kaggle_arc",
+      "name": "Kaggle + ARC Prize",
+      "mode": "competition_discovery_only"
+    },
+    {
+      "id": "devpost",
+      "name": "Devpost",
+      "mode": "hackathon_discovery_only"
+    },
+    {
+      "id": "encode_club",
+      "name": "Encode Club",
+      "mode": "hackathon_discovery_only"
+    },
+    {
+      "id": "ethglobal",
+      "name": "ETHGlobal",
+      "mode": "hackathon_discovery_only"
+    },
+    {
+      "id": "lablab",
+      "name": "lablab.ai",
+      "mode": "hackathon_discovery_only"
+    },
+    {
+      "id": "paragraph",
+      "name": "Paragraph",
+      "mode": "monetization_channel"
+    },
+    {
+      "id": "substack",
+      "name": "Substack",
+      "mode": "monetization_channel"
+    },
+    {
+      "id": "x_creator",
+      "name": "X Creator Revenue Sharing",
+      "mode": "monetization_channel"
+    },
+    {
+      "id": "reddit_contributor",
+      "name": "Reddit Contributor Program",
+      "mode": "monetization_channel"
+    },
+    {
+      "id": "spotify_partner",
+      "name": "Spotify Partner Program",
+      "mode": "monetization_channel"
+    },
+    {
+      "id": "youtube_partner",
+      "name": "YouTube Partner Program",
+      "mode": "monetization_channel"
+    },
+    {
+      "id": "agentictrade",
+      "name": "AgenticTrade",
+      "mode": "monetization_channel"
+    },
+    {
+      "id": "the402",
+      "name": "the402",
+      "mode": "monetization_channel"
+    },
+    {
+      "id": "circle_agent_marketplace",
+      "name": "Circle Agent Marketplace",
+      "mode": "monetization_channel"
+    },
+    {
+      "id": "fal",
+      "name": "FAL",
+      "mode": "monetization_channel"
+    },
+    {
+      "id": "skyfire",
+      "name": "Skyfire",
+      "mode": "monetization_channel"
+    },
+    {
+      "id": "agentbazaar",
+      "name": "AgentBazaar",
+      "mode": "direct_inbound_poll"
+    },
+    {
+      "id": "workprotocol",
+      "name": "WorkProtocol",
+      "mode": "direct_experimental"
+    }
+  ]
+}

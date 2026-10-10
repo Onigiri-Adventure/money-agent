@@ -1,0 +1,47 @@
+{
+  "currency": "USD_USDC_equivalent",
+  "max_out_of_pocket_usd": 0,
+  "hard_minimum_net_payout": 5,
+  "preferred_net_payout": 10,
+  "high_value_net_payout": 25,
+  "tiers": [
+    {
+      "min_net": 5,
+      "max_net_exclusive": 10,
+      "max_estimated_minutes": 10,
+      "min_confidence": 0.9,
+      "min_effective_hourly": 24
+    },
+    {
+      "min_net": 10,
+      "max_net_exclusive": 25,
+      "max_estimated_minutes": 30,
+      "min_confidence": 0.82,
+      "min_effective_hourly": 18
+    },
+    {
+      "min_net": 25,
+      "max_net_exclusive": null,
+      "max_estimated_minutes": 60,
+      "min_confidence": 0.75,
+      "min_effective_hourly": 15
+    }
+  ],
+  "max_new_jobs_per_cycle": 2,
+  "max_ai_assessments_per_cycle": 6,
+  "max_ai_assessments_per_day": 18,
+  "max_ai_jobs_per_day": 8,
+  "platform_fees_deducted_from_earnings_are_allowed": true,
+  "never_pay": [
+    "deposits",
+    "stakes",
+    "collateral",
+    "gas from user funds",
+    "paid bid credits",
+    "paid API calls",
+    "subscriptions",
+    "purchases required by a task",
+    "verification fees",
+    "account boosts"
+  ]
+}

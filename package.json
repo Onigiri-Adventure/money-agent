@@ -1,0 +1,18 @@
+{
+  "name": "money-agent",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "check": "node --check src/index.js && node --check src/agent.js && node --check src/ai.js && node --check src/policy.js && node --check src/work.js"
+  },
+  "dependencies": {
+    "viem": "^2.37.0",
+    "@noble/ed25519": "^2.2.3"
+  },
+  "devDependencies": {
+    "wrangler": "^4.42.0"
+  }
+}

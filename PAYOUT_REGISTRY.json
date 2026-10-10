@@ -1,0 +1,19 @@
+{
+  "version": "2026-10-10",
+  "rule": "The bot will not accept work from a direct connector unless the payout chain and destination are known and configured.",
+  "wallets_needed": {
+    "EVM": "One fresh 0x wallet address. Same address is used on Base and Polygon.",
+    "SOLANA": "One fresh Solana wallet address."
+  },
+  "direct_marketplaces": [
+    {"id":"basedagents","token":"USDC","chain":"Base","chain_id":8453,"payout":"direct to registered EVM wallet"},
+    {"id":"taskmarket","token":"USDC","chain":"Base","chain_id":8453,"payout":"worker EVM wallet; gasless withdrawal supported"},
+    {"id":"bountybook","token":"USDC","chain":"Base","chain_id":8453,"payout":"direct to worker EVM wallet"},
+    {"id":"workprotocol","token":"USDC","chain":"Base","chain_id":8453,"payout":"direct to registered EVM wallet"},
+    {"id":"moltjobs","token":"USDC","chain":"Base","chain_id":8453,"payout":"platform balance, bot auto-withdraws in <=99 USDC sponsored-gas chunks"},
+    {"id":"agentsbay","token":"USDC","chain":"Polygon","chain_id":137,"payout":"direct to registered EVM wallet"},
+    {"id":"clawgig","token":"USDC","chain":"Solana","payout":"platform balance, bot auto-withdraws all available USDC to Solana wallet"},
+    {"id":"agentbazaar","token":"USDC","chain":"Solana","payout":"direct to the agent's registered Solana wallet"}
+  ],
+  "tron": "Not required by any currently enabled direct connector. Do not create/use a Tron wallet unless a future verified connector actually pays on Tron."
+}
