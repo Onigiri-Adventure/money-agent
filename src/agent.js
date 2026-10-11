@@ -6,6 +6,7 @@ import { opportunityId, nowIso, n } from './utils.js';
 import { bountybook, taskmarket, agentsbay, workprotocol, clawgig, moltjobs, agentbazaar, basedagents, discoveryOnly } from './marketplaces/index.js';
 import { agentLotSummary } from './marketplaces/agentlot.js';
 import { payoutReadyForSource, payoutStatus, sweepPayouts } from './payouts.js';
+import { bulkOnboard } from './onboard.js';
 
 const DIRECT = [basedagents, bountybook, taskmarket, agentsbay, workprotocol, clawgig, moltjobs];
 const PROPOSAL_SOURCES = new Set(['clawgig', 'moltjobs']);
@@ -26,6 +27,11 @@ export class MoneyAgent {
     if (url.pathname === '/run' && request.method === 'POST') {
       return Response.json(await this.runCycle());
     }
+    if (url.pathname === '/onboard' && request.method === 'POST') {
+  return Response.json(
+    await bulkOnboard(this.env, this.state.storage)
+  );
+}
     if (url.pathname === '/status') return Response.json(await this.status());
     if (url.pathname === '/events') return Response.json({ events: await this.events(100) });
     return Response.json({ ok: false, error: 'not found' }, { status: 404 });
