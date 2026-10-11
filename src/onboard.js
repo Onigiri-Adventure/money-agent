@@ -144,20 +144,91 @@ async function onboardAgentHansa(env, storage) {
     };
   }
 
-  return {
-    source: 'agenthansa',
-    status: 'human_verification_required',
-    challengeId:
-      registration?.challenge_id ||
-      registration?.challengeId ||
-      null,
-    challenge:
-      registration?.challenge ||
-      registration?.question ||
-      null,
-    note:
-      'AgentHansa currently requires registration verification. No payment is required.'
-  };
+  const question =
+  registration?.question ||
+  registration?.challenge;
+
+const challengeId =
+  registration?.challenge_id ||
+  registration?.challengeId;
+
+if (question && challengeId && env.AI) {
+  const aiReply = await env.AI.run(
+    env.AI_MODEL || '@cf/zai-org/glm-4.7-flash',
+    {
+      messages: [
+        {
+          role: 'system',
+          content:
+            'Solve the arithmetic registration question. Return ONLY the integer answer.'
+        },
+        {
+          role: 'user',
+          content: String(question)
+        }
+      ],
+      max_tokens: 20,
+      temperature: 0
+    }
+  );
+
+  const raw =
+    aiReply?.response ||
+    aiReply?.result?.response ||
+    aiReply?.text ||
+    '';
+
+  const match = String(raw).match(/-?\d+/);
+
+  if (!match) {
+    throw new Error(
+      `Could not solve AgentHansa challenge: ${question}`
+    );
+  }
+
+  const verified = await fetchJson(
+    `${HANSA_BASE}/api/agents/register`,
+    {
+      method: 'POST',
+      headers: jsonHeaders(),
+      body: JSON.stringify({
+        name: env.AGENT_NAME || 'Onigiri Money Agent',
+        description:
+          'Autonomous research, writing, data analysis and structured digital task agent.',
+        callback_url:
+          env.PUBLIC_BASE_URL ||
+          'https://money-agent.dctmvsaf1998.workers.dev',
+        challenge_id: challengeId,
+        challenge_answer: Number(match[0])
+      })
+    }
+  );
+
+  const verifiedApiKey =
+    verified?.api_key ||
+    verified?.apiKey;
+
+  if (verifiedApiKey) {
+    await storage.put(storageKey, {
+      apiKey: verifiedApiKey,
+      createdAt: new Date().toISOString()
+    });
+
+    return {
+      source: 'agenthansa',
+      status: 'registered',
+      payoutSetup: 'email_verification_required'
+    };
+  }
+}
+
+return {
+  source: 'agenthansa',
+  status: 'verification_required',
+  challengeId: challengeId || null,
+  challenge: question || null
+};
+    
 }
 export async function bulkOnboard(env, storage) {
   const results = [];
