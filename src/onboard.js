@@ -91,38 +91,23 @@ async function onboardAgentsBay(env) {
 }
 
 async function onboardAgentHansa(env, storage) {
-  if (!env.PAYOUT_SOLANA_ADDRESS) {
-    return {
-      source: 'agenthansa',
-      status: 'missing_solana_wallet'
-    };
-  }
-
   const storageKey = 'credential:agenthansa';
 
-  let saved = await storage.get(storageKey);
+  const saved = await storage.get(storageKey);
 
   if (saved?.apiKey) {
     try {
-      const me = await fetchJson(
-        `${HANSA_BASE}/api/agents/me`,
-        {
-          headers: jsonHeaders(saved.apiKey)
-        }
-      );
+      await fetchJson(`${HANSA_BASE}/api/agents/me`, {
+        headers: jsonHeaders(saved.apiKey)
+      });
 
       return {
         source: 'agenthansa',
-        status: 'already_registered',
-        id: saved.id || me?.id || null
+        status: 'already_registered'
       };
     } catch (e) {
-      if (e.status !== 401 && e.status !== 403) {
-        throw e;
-      }
-
+      if (e.status !== 401 && e.status !== 403) throw e;
       await storage.delete(storageKey);
-      saved = null;
     }
   }
 
@@ -134,7 +119,10 @@ async function onboardAgentHansa(env, storage) {
       body: JSON.stringify({
         name: env.AGENT_NAME || 'Onigiri Money Agent',
         description:
-          'Autonomous research, writing, data analysis and structured digital task agent.'
+          'Autonomous research, writing, data analysis and structured digital task agent.',
+        callback_url:
+          env.PUBLIC_BASE_URL ||
+          'https://money-agent.dctmvsaf1998.workers.dev'
       })
     }
   );
@@ -143,37 +131,34 @@ async function onboardAgentHansa(env, storage) {
     registration?.api_key ||
     registration?.apiKey;
 
-  if (!apiKey) {
-    throw new Error(
-      'AgentHansa did not return an API key'
-    );
+  if (apiKey) {
+    await storage.put(storageKey, {
+      apiKey,
+      createdAt: new Date().toISOString()
+    });
+
+    return {
+      source: 'agenthansa',
+      status: 'registered',
+      payoutSetup: 'pending'
+    };
   }
-
-  await fetchJson(
-    `${HANSA_BASE}/api/agents/wallet`,
-    {
-      method: 'PUT',
-      headers: jsonHeaders(apiKey),
-      body: JSON.stringify({
-        wallet_address: env.PAYOUT_SOLANA_ADDRESS
-      })
-    }
-  );
-
-  await storage.put(storageKey, {
-    id: registration?.id || null,
-    apiKey,
-    payoutWallet: env.PAYOUT_SOLANA_ADDRESS,
-    createdAt: new Date().toISOString()
-  });
 
   return {
     source: 'agenthansa',
-    status: 'registered',
-    id: registration?.id || null
+    status: 'human_verification_required',
+    challengeId:
+      registration?.challenge_id ||
+      registration?.challengeId ||
+      null,
+    challenge:
+      registration?.challenge ||
+      registration?.question ||
+      null,
+    note:
+      'AgentHansa currently requires registration verification. No payment is required.'
   };
 }
-
 export async function bulkOnboard(env, storage) {
   const results = [];
 
