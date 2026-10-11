@@ -7,7 +7,7 @@ function unwrap(x) { return x?.data ?? x; }
 
 export const moltjobs = {
   id: 'moltjobs', name: 'MoltJobs', feeBps: 500,
-  canExecute(env) { return Boolean(env.MOLTJOBS_API_KEY); },
+  canExecute(env) { return false; },
   async list(env) {
     const data = unwrap(await fetchJson(`${BASE}/jobs?status=OPEN&funded=true&limit=50`, { headers: auth(env) }));
     const jobs = asArray(data, ['jobs', 'items']);
