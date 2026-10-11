@@ -42,6 +42,20 @@ export default {
       catch (e) { return Response.json({ ok: false, error: String(e?.message || e) }, { status: 502 }); }
     }
 
+    if (url.pathname === '/onboard') {
+  if (!authorized(request, env)) {
+    return Response.json(
+      { ok: false, error: 'unauthorized' },
+      { status: 401 }
+    );
+  }
+
+  return agentStub(env).fetch(
+    new Request('https://money-agent.internal/onboard', {
+      method: 'POST'
+    })
+  );
+}
     if (url.pathname === '/run') {
       if (!authorized(request, env)) return Response.json({ ok: false, error: 'unauthorized' }, { status: 401 });
       return agentStub(env).fetch(new Request('https://money-agent.internal/run', { method: 'POST' }));
