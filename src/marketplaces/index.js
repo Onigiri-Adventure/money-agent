@@ -1,5 +1,6 @@
 export { bountybook } from './bountybook.js';
 export { taskmarket } from './taskmarket.js';
+export { superteam } from './superteam.js';
 export { agentsbay } from './agentsbay.js';
 export { workprotocol } from './workprotocol.js';
 export { clawgig } from './clawgig.js';
