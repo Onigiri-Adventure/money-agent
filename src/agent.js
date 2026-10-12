@@ -3,12 +3,12 @@ import { hardPolicyCheck, moneyCheck, computeNet } from './policy.js';
 import { assessOpportunity } from './ai.js';
 import { executeWork } from './work.js';
 import { opportunityId, nowIso, n } from './utils.js';
-import { bountybook, taskmarket, agentsbay, workprotocol, clawgig, moltjobs, agentbazaar, basedagents, discoveryOnly } from './marketplaces/index.js';
+import { bountybook, taskmarket, superteam, agentsbay, workprotocol, clawgig, moltjobs, agentbazaar, basedagents, discoveryOnly } from './marketplaces/index.js';
 import { agentLotSummary } from './marketplaces/agentlot.js';
 import { payoutReadyForSource, payoutStatus, sweepPayouts } from './payouts.js';
 import { bulkOnboard } from './onboard.js';
 
-const DIRECT = [basedagents, bountybook, taskmarket, agentsbay, workprotocol, clawgig, moltjobs];
+const DIRECT = [basedagents, bountybook, taskmarket, superteam, agentsbay, workprotocol, clawgig, moltjobs];
 const PROPOSAL_SOURCES = new Set(['clawgig', 'moltjobs']);
 const SEEN_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 const RETRY_TTL_MS = 12 * 60 * 60 * 1000;
@@ -75,18 +75,26 @@ export class MoneyAgent {
   }
 
   connectorState() {
-    const direct = DIRECT.map(a => ({
-      id: a.id,
-      enabled: Boolean(a.canExecute?.(this.env)),
-      needs: a.id === 'basedagents' ? ['BASEDAGENTS_AGENT_ID','BASEDAGENTS_PUBLIC_KEY','BASEDAGENTS_PRIVATE_KEY_HEX','PAYOUT_EVM_ADDRESS'] :
-        a.id === 'bountybook' || a.id === 'taskmarket' || a.id === 'agentsbay' ? ['EVM_PRIVATE_KEY','PAYOUT_EVM_ADDRESS'] :
-        a.id === 'workprotocol' ? ['WORKPROTOCOL_API_KEY','WORKPROTOCOL_AGENT_ID','PAYOUT_EVM_ADDRESS'] :
-        a.id === 'clawgig' ? ['CLAWGIG_API_KEY','PAYOUT_SOLANA_ADDRESS'] :
-        a.id === 'moltjobs' ? ['MOLTJOBS_API_KEY','MOLTJOBS_AGENT_ID','PAYOUT_EVM_ADDRESS'] : []
-    }));
-    direct.push({ id: 'agentbazaar', enabled: agentbazaar.canExecute(this.env), needs: ['AGENTBAZAAR_API_TOKEN'], registeredPriceUsd: Number(this.env.AGENTBAZAAR_PRICE_USDC || 15) });
-    return direct;
-  }
+  const direct = DIRECT.map(a => ({
+    id: a.id,
+    enabled: Boolean(a.canExecute?.(this.env)),
+    needs: a.id === 'basedagents' ? ['BASEDAGENTS_AGENT_ID','BASEDAGENTS_PUBLIC_KEY','BASEDAGENTS_PRIVATE_KEY_HEX','PAYOUT_EVM_ADDRESS'] :
+      a.id === 'bountybook' || a.id === 'taskmarket' || a.id === 'agentsbay' ? ['EVM_PRIVATE_KEY','PAYOUT_EVM_ADDRESS'] :
+      a.id === 'superteam_earn' ? ['SUPERTEAM_AGENT_API_KEY'] :
+      a.id === 'workprotocol' ? ['WORKPROTOCOL_API_KEY','WORKPROTOCOL_AGENT_ID','PAYOUT_EVM_ADDRESS'] :
+      a.id === 'clawgig' ? ['CLAWGIG_API_KEY','PAYOUT_SOLANA_ADDRESS'] :
+      a.id === 'moltjobs' ? ['MOLTJOBS_API_KEY','MOLTJOBS_AGENT_ID','PAYOUT_EVM_ADDRESS'] : []
+  }));
+
+  direct.push({
+    id: 'agentbazaar',
+    enabled: agentbazaar.canExecute(this.env),
+    needs: ['AGENTBAZAAR_API_TOKEN'],
+    registeredPriceUsd: Number(this.env.AGENTBAZAAR_PRICE_USDC || 15)
+  });
+
+  return direct;
+}
 
 
   async processPendingAwards() {
