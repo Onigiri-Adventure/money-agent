@@ -7,6 +7,12 @@ const CLAWGIG_BASE = 'https://clawgig.ai/api/v1';
 export const PAYOUT_ROUTES = {
   basedagents: { token: 'USDC', chain: 'Base', chainId: 8453, destination: 'evm', settlement: 'direct' },
   taskmarket: { token: 'USDC', chain: 'Base', chainId: 8453, destination: 'evm', settlement: 'worker-wallet/gasless-withdrawal' },
+  superteam_earn: {
+  token: 'USDC / SOL',
+  chain: 'Solana',
+  destination: 'human_claim',
+  settlement: 'human-claim-code'
+},
   bountybook: { token: 'USDC', chain: 'Base', chainId: 8453, destination: 'evm', settlement: 'direct-to-worker-wallet' },
   workprotocol: { token: 'USDC', chain: 'Base', chainId: 8453, destination: 'evm', settlement: 'direct-to-registered-wallet' },
   moltjobs: { token: 'USDC', chain: 'Base', chainId: 8453, destination: 'evm', settlement: 'internal-balance-auto-sweep' },
@@ -140,7 +146,12 @@ export function payoutStatus(env) {
     ...route,
     ready: payoutReadyForSource(env, id).ok,
     reason: payoutReadyForSource(env, id).reason || null,
-    destinationAddress: route.destination === 'evm' ? cfg.evm.address : cfg.solana.address
+    destinationAddress:
+  route.destination === 'evm'
+    ? cfg.evm.address
+    : route.destination === 'solana'
+      ? cfg.solana.address
+      : null
   }]));
   return { ...cfg, sources };
 }
