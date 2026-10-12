@@ -20,7 +20,7 @@ export const SAFE_CATEGORIES = new Set([
 ]);
 
 export const DIRECT_SOURCE_IDS = new Set([
-  'basedagents', 'bountybook', 'taskmarket', 'agentsbay', 'workprotocol', 'clawgig', 'moltjobs', 'agentbazaar'
+  'basedagents', 'bountybook', 'taskmarket','superteam_earn', 'agentsbay', 'workprotocol', 'clawgig', 'moltjobs', 'agentbazaar'
 ]);
 
 export const HARD_SOURCE_BLOCKS = new Map([
